@@ -34,14 +34,33 @@ public class Battle{
   public void turn(Pokemon a, Pokemon b){
     System.out.println(a + "'s turn!");
         Move move = moveChoice(a);
-        int power = move.getPower();
-        int damage = (int)(power * ((double)a.getAttack())/b.getDefense());
-        System.out.println(b + " took " + damage + " damage.");
-        b.damage(damage);
-        System.out.println(b + " has " + Math.max(b.getHp(), 0) + " hit points left."); 
+        // check status effect first
+
+        // check if the move buffs or debuffs second
+        if (move instanceof BuffingMove) {
+            ((BuffingMove) move).changeStat(a);
+        }
+        else if (move instanceof DebuffingMove) {
+            ((DebuffingMove) move).changeStat(b);
+        }
+
+        // if neither 1 or 2, does damage
+        else {
+            int power = move.getPower(b);
+            int damage = (int)(power * ((double)a.getAttack())/b.getDefense());
+            System.out.println(b + " took " + damage + " damage.");
+            b.damage(damage);
+            System.out.println(b + " has " + Math.max(b.getHp(), 0) + " hit points left."); 
+      }
   }
 
   public void start(){
+    // checking speed. if pokemon 2 is faster, switch their names. otherwise, continue as normal
+    if (p2.getSpeed() > p1.getSpeed()) {
+        Pokemon temp = p2;
+        p2 = p1;
+        p1 = temp;
+    }
     System.out.println("A wild " + p2 + " has appeared! I choose you, " + p1);
     int turn = 0;
     while(p1.getHp() > 0 && p2.getHp() > 0){

@@ -5,9 +5,10 @@ public class Main {
     Pidgey p = new Pidgey();
     Lucario l = new Lucario();
     Jolteon j = new Jolteon();
+    Flygon f = new Flygon();
     
 
-    Battle battle = new Battle(l, b);
+    Battle battle = new Battle(f, j);
     battle.start();
     }
 
