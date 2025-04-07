@@ -28,7 +28,7 @@ public class BuffingMove extends Move {
             System.out.println(a.getName() + "'s defense increased by "+ buffAmount + "!");
         }
 
-        else if (stat.toLowerCase().equals("hp")) {
+        else if (stat.toLowerCase().equals("hp") || stat.toLowerCase().equals("health")) {
             a.setHp(a.getHp() + buffAmount);
             System.out.println(a.getName() + "'s health increased by "+ buffAmount + "!");
         }

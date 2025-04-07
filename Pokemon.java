@@ -81,11 +81,11 @@ public class Pokemon{
 
     public void setStatusEffect(String s) {
         this.statusEffect = s;
-        System.out.println(name + " is now " + statusEffect + "!");
+        System.out.println(name + " is now " + statusEffect + "!");  //change this bc it could print smth like "name is now Sleep"
     }
     
     public void removeStatusEffect() {
-        System.out.println(name + " is no longer " + statusEffect + "!");
+        System.out.println(name + " is no longer " + statusEffect + "!");  //same with this line
         this.statusEffect = null;
     }
 

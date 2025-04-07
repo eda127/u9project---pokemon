@@ -11,14 +11,14 @@ public class Battle{
   public Move moveChoice(Pokemon p){
     Scanner input = new Scanner(System.in);
 
-      //debugging only
-      int health = p.getHp();
-      int attack = p.getAttack();
-      int defense = p.getDefense();
-      int speed = p.getSpeed();
-      String effect = p.getStatusEffect();
-      System.out.println("health: " + health + "  attack: " + attack + "  defense:" + defense + "  speed:" + speed + "  status effect:" + effect + " status turns: " + p.statusTurns + " canMove: " + p.canMove);
-      //end of debugging code
+        //debugging only
+        int health = p.getHp();
+        int attack = p.getAttack();
+        int defense = p.getDefense();
+        int speed = p.getSpeed();
+        String effect = p.getStatusEffect();
+        System.out.println("        health: " + health + "  attack: " + attack + "  defense:" + defense + "  speed:" + speed + "  status effect:" + effect + " status turns: " + p.statusTurns + " canMove: " + p.canMove);
+        //end of debugging code
     
     System.out.println("Choose a move:");
     int i = 1;
@@ -43,12 +43,13 @@ public class Battle{
 
   public void turn(Pokemon a, Pokemon b){
     System.out.println(a + "'s turn!");
-      // applying status effect to current pokemon, if it has one. if no status, nothing happens
+      
+    // applying status effect to current pokemon, if it has one. if no status, nothing happens
       StatusMove.effectConsequences(a);
 
       // check if pokemon can move (from status)
       if (!a.canMove) {
-          System.out.println("oneone");
+          System.out.println("        IM NUMBER 4! (In battle)");
           return;
       }
       Move move = moveChoice(a);
@@ -80,6 +81,7 @@ public class Battle{
           b.damage(damage);
           System.out.println(b + " has " + Math.max(b.getHp(), 0) + " hit points left."); 
       }
+      System.out.println("End of " + a.getName() + "'s turn.");
   }
 
   public void start(){
