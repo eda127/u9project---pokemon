@@ -6,9 +6,10 @@ public class Main {
     Lucario l = new Lucario();
     Jolteon j = new Jolteon();
     Flygon f = new Flygon();
-    
+    Pelipper pp = new Pelipper();
+    onlyStatus o = new onlyStatus();
 
-    Battle battle = new Battle(f, j);
+    Battle battle = new Battle(pp, o);
     battle.start();
     }
 

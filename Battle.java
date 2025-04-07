@@ -10,6 +10,16 @@ public class Battle{
 
   public Move moveChoice(Pokemon p){
     Scanner input = new Scanner(System.in);
+
+      //debugging only
+      int health = p.getHp();
+      int attack = p.getAttack();
+      int defense = p.getDefense();
+      int speed = p.getSpeed();
+      String effect = p.getStatusEffect();
+      System.out.println("health: " + health + "  attack: " + attack + "  defense:" + defense + "  speed:" + speed + "  status effect:" + effect + " status turns: " + p.statusTurns);
+      //end of debugging code
+    
     System.out.println("Choose a move:");
     int i = 1;
     for(Move move:p.getMoveList()){
@@ -34,7 +44,26 @@ public class Battle{
   public void turn(Pokemon a, Pokemon b){
     System.out.println(a + "'s turn!");
         Move move = moveChoice(a);
-        // check status effect first
+
+        // applying status effect to current pokemon, if it has one
+        if (a.getStatusEffect() != null) {
+            //then, apply status effect
+            StatusMove.effectConsequences(a);
+        }
+
+        // giving status effect to other pokemon if turn not skipped and move is a status effect move
+        if (move instanceof StatusMove) {
+            StatusMove sMove = (StatusMove)move;
+            if (Math.random()*100 < (sMove.getInflictionChance())) {
+                b.setStatusEffect(sMove.getStatusEffect());
+                
+                // if the status is sleep or freeze, its active for 1-3 turns only
+                if (sMove.getStatusEffect().equals("Sleep") || sMove.getStatusEffect().equals("Frozen")) {
+                    b.setStatusTurns((int)(Math.random() * 3) +1);
+                }
+                else b.setStatusTurns(-1);
+            }
+        }
 
         // check if the move buffs or debuffs second
         if (move instanceof BuffingMove) {
@@ -44,7 +73,7 @@ public class Battle{
             ((DebuffingMove) move).changeStat(b);
         }
 
-        // if neither 1 or 2, does damage
+        // if neither status move or buff/debuff move, do damage
         else {
             int power = move.getPower(b);
             int damage = (int)(power * ((double)a.getAttack())/b.getDefense());

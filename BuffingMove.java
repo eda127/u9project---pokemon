@@ -1,17 +1,20 @@
 public class BuffingMove extends Move {
     String stat;
     int buffAmount;
+    int inflictionChance;
 
-    public BuffingMove(String n, int p, String t, int l, int a, String s, int bA) {
+    public BuffingMove(String n, int p, String t, int l, int a, String s, int bA, int iC) {
         super(n, p, t, l, a);
         this.stat = s;
         this.buffAmount = bA;
+        this.inflictionChance = iC;
     }
 
-    public BuffingMove(String n, int p, String t, int l, String s, int bA) {
+    public BuffingMove(String n, int p, String t, int l, String s, int bA, int iC) {
         super(n, p, t, l);
         this.stat = s;
         this.buffAmount = bA;
+        this.inflictionChance = iC;
     }
 
     public void changeStat(Pokemon a) {

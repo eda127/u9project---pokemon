@@ -6,7 +6,8 @@ public class Pokemon{
     String type;
     int speed;
     int baseAccuracy = 100;
-    String statusEffect;
+    String statusEffect = null;
+    int statusTurns = 0;
     Move[] moveList;
 
     public Pokemon(String n, int hp, int attack, int defense, String type, int speed, Move[] moves){
@@ -63,8 +64,16 @@ public class Pokemon{
         this.speed = s;
     }
 
+    public int getAccuracy() {
+        return this.baseAccuracy;
+    }
+    
+    public void setAccuracy(int a) {
+        this.baseAccuracy = a;
+    }
 
-    // status effect
+
+    // status effect methods
     public String getStatusEffect() {
         return this.statusEffect;
     }
@@ -77,6 +86,18 @@ public class Pokemon{
     public void removeStatusEffect() {
         System.out.println(name + " is no longer " + statusEffect + "!");
         this.statusEffect = null;
+    }
+
+    public void setStatusTurns(int i) {
+        statusTurns = i;
+    }
+
+    public int getStatusTurns() {
+        return this.statusTurns;
+    }
+
+    public void decreaseStatusTurns() {
+        statusTurns--;
     }
     
 
