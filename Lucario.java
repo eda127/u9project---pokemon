@@ -1,3 +1,4 @@
+
 public class Lucario extends Pokemon {
     public Lucario() {
         super("Lucario", 85, 110/2, 70, "Fighting", 100, new Move[] {

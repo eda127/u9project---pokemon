@@ -49,39 +49,25 @@ public class Move{
         else this.level = 5000;
     }
 
-  
     public int getPower(Pokemon other){
       int power = this.power;
       System.out.println(this.name + "!");
       //checking if accuracy made the move miss
       if ((int) (Math.random()*100) < this.accuracy) {
-          //calling the changeLevelToPercent method first, then checking 
-          //if it is a crit hit. multiply by 1.5 if yes
+          //calling the changeLevelToPercent method first, checking if it is a crit hit. multiply by 1.5 if yes
           changeLevelToPercent();
           if ((int) (Math.random()*10000) < this.level) {
-            power = (int) (this.power * 1.5);
+              power = (int)(this.power * 1.5);
           }
           else power = this.power;
           
           //checking the type damage
           power = (int) (power * typeDamage(other));
 
-          //debugging
-          System.out.println("   DEBUGGING");
-          System.out.println("   move type and opponent type: " + test1 + "\n    multiplier: " + test2);
-
-      }
-      else {
-          System.out.println(this.name + " missed!");
-          power = 0;
       }
       return power;
     }
 
-    //delete after. for debugging
-    String test1;
-    String test2;
-    //////////////
     
     public double typeDamage(Pokemon other) {
         int moveTypePos = 0;
@@ -96,9 +82,6 @@ public class Move{
                 opponentTypePos = i;
             }
         }
-        //returning the damage output. the next 2 lines are debugging.
-          test1 = "   " + types[moveTypePos] + " " + types[opponentTypePos];
-          test2 = "   " + typeWeaknesses[opponentTypePos][moveTypePos];
         return typeWeaknesses[opponentTypePos][moveTypePos];
     }
 

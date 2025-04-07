@@ -10,15 +10,6 @@ public class Battle{
 
   public Move moveChoice(Pokemon p){
     Scanner input = new Scanner(System.in);
-
-        //debugging only
-        int health = p.getHp();
-        int attack = p.getAttack();
-        int defense = p.getDefense();
-        int speed = p.getSpeed();
-        String effect = p.getStatusEffect();
-        System.out.println("        health: " + health + "  attack: " + attack + "  defense:" + defense + "  speed:" + speed + "  status effect:" + effect + " status turns: " + p.statusTurns + " canMove: " + p.canMove);
-        //end of debugging code
     
     System.out.println("Choose a move:");
     int i = 1;
@@ -43,26 +34,35 @@ public class Battle{
 
   public void turn(Pokemon a, Pokemon b){
     System.out.println(a + "'s turn!");
-      
-    // applying status effect to current pokemon, if it has one. if no status, nothing happens
-      StatusMove.effectConsequences(a);
 
-      // check if pokemon can move (from status)
+          /*//debugging only
+          int health = a.getHp();
+          int attack = a.getAttack();
+          int defense = a.getDefense();
+          int speed = a.getSpeed();
+          String effect = a.getStatusEffect();
+          System.out.println("        health: " + health + "  attack: " + attack + "  defense:" + defense + "  speed:" + speed + "  status effect:" + effect + " status turns: " + a.statusTurns + " canMove: " + a.canMove);
+          //end of debugging code*/
+
+      // stops turn if pokemon can't move
       if (!a.canMove) {
-          System.out.println("        IM NUMBER 4! (In battle)");
           return;
       }
       Move move = moveChoice(a);
 
-      // giving status effect to other pokemon if turn not skipped and move is a status effect move
-      if (move instanceof StatusMove) {
-          StatusMove sMove = (StatusMove)move;
-          System.out.println("        OVER HERE 1 IN BATTLE");
+      // if the move gives a status effect
+      if (move instanceof EffectMove) {
+          EffectMove sMove = (EffectMove)move;
+          // has a .getInflictionChance() chance of applying effect, then applies damage
           if (Math.random()*100 < (sMove.getInflictionChance())) {
-              System.out.println("        HERE IM 2 IN BATTLE");
               b.setStatusEffect(sMove.getStatusEffect());
-              StatusMove.effectConsequences(b); //maybe this line isnt supposed to be here?
+              int power = move.getPower(b);
+              int damage = (int)(power * ((double)a.getAttack())/b.getDefense());
+              System.out.println(b + " took " + damage + " damage.");
+              b.damage(damage);
+              System.out.println(b + " has " + Math.max(b.getHp(), 0) + " hit points left."); 
           }
+          else System.out.println(a.getName() + " missed!");
       }
       
       // check if the move buffs or debuffs second
@@ -81,6 +81,11 @@ public class Battle{
           b.damage(damage);
           System.out.println(b + " has " + Math.max(b.getHp(), 0) + " hit points left."); 
       }
+
+      // applying status effect to current pokemon, if it has one. if no status, nothing happens. 
+      //only happens at end of turn
+      EffectMove.effectConsequences(a);
+
       System.out.println("End of " + a.getName() + "'s turn.");
   }
 

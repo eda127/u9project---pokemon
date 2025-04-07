@@ -6,26 +6,26 @@ public class Pokemon{
     String type;
     int speed;
     int baseAccuracy = 100;
-    String statusEffect = null;
+    String statusEffect = "none";
     int statusTurns = 0;
     boolean canMove = true;
     Move[] moveList;
 
     public Pokemon(String n, int hp, int attack, int defense, String type, int speed, Move[] moves){
-      this.name = n;
-      this.hp = hp;
-      this.attack = attack;
-      this.defense = defense;
-      this.type = type;
-      this.moveList = moves;
+        this.name = n;
+        this.hp = hp;
+        this.attack = attack;
+        this.defense = defense;
+        this.type = type;
+        this.moveList = moves;
     }
   
     public String getName() {
-      return name;
+        return name;
     }
 
     public int getHp(){
-      return hp;
+        return hp;
     }
 
     public void setHp(int hp) {
@@ -33,11 +33,11 @@ public class Pokemon{
     }
   
     public void damage(int amount){
-      hp -= amount;
+        hp -= amount;
     }
   
     public int getDefense(){
-      return defense;
+        return defense;
     }
 
     public void setDefense(int d) {
@@ -45,8 +45,8 @@ public class Pokemon{
     }
   
     public int getAttack(){
-      if ((int)(Math.random()*100) <= baseAccuracy) return attack;
-      else return 0; //doesnt say that "attack missed!" because of accuracy. have to say
+        if ((int)(Math.random()*100) <= baseAccuracy) return attack;
+        else return 0;
     }
 
     public void setAttack(int a) {
@@ -54,7 +54,7 @@ public class Pokemon{
     }
   
     public String getType(){
-      return type;
+        return type;
     }
 
     public int getSpeed() {
@@ -81,12 +81,15 @@ public class Pokemon{
 
     public void setStatusEffect(String s) {
         this.statusEffect = s;
-        System.out.println(name + " is now " + statusEffect + "!");  //change this bc it could print smth like "name is now Sleep"
+        System.out.println(name + " now has the " + statusEffect + " effect!");  //change this bc it could print smth like "name is now Sleep"
     }
     
     public void removeStatusEffect() {
-        System.out.println(name + " is no longer " + statusEffect + "!");  //same with this line
-        this.statusEffect = null;
+        if (statusEffect.equals("burn")) {
+            attack *= 2; //restores the halving of the attack if it got burnt
+        }
+        System.out.println(name + " no longer has the " + statusEffect + " effect!");  //same with this line
+        this.statusEffect = "none";
     }
 
     public void setStatusTurns(int i) {
@@ -105,16 +108,15 @@ public class Pokemon{
         this.canMove = b;
     }
 
-
     public Move[] getMoveList(){
-      return this.moveList;
+        return this.moveList;
     }
   
     public int typeAdjustment(){
-      return 0;
+        return 0;
     }
   
     public String toString(){
-      return this.name;
+        return this.name;
     }
-  }
+}
