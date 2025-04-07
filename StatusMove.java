@@ -30,14 +30,24 @@ public class StatusMove extends Move {
         return statusEffect;
     }
 
+
     public static void effectConsequences(Pokemon other) {
         String effect = other.getStatusEffect();
+        System.out.println("        HERE I AM NUMBER 3 IN StatusMove  " + effect);
+
+        if (effect == null) other.canMove(true);
         
-        if (effect.equals("Paralyzed")) {
-            if (Math.random() < 0.25) System.out.println(other.getName() + " is paralyzed and can't move!");
+        else if (effect.equals("Paralyzed")) {
+            other.setStatusTurns(-1);
+            if (Math.random() < 0.25) {
+                System.out.println(other.getName() + " is paralyzed and can't move!");
+                other.canMove(false);
+            }
+            else other.canMove(true);
         }
 
         else if (effect.equals("Burned")) {
+            other.setStatusTurns(-1);
             int burnAmount = other.getHp() / 16;
             other.setAttack(other.getAttack()/2);  //halves the attack if its burnt
             other.setHp(other.getHp() - burnAmount);
@@ -45,25 +55,52 @@ public class StatusMove extends Move {
         }
 
         else if (effect.equals("Poisoned")) {
+            other.setStatusTurns(-1);
             int poisonAmount = other.getHp() / 8;
             other.setHp(other.getHp() - poisonAmount);
             System.out.println(other.getName() + " is hurt by its poison! It took " + poisonAmount + "damage.");
         }
 
         else if (effect.equals("Sleep")) {
-            if (other.getStatusTurns() == 0) {
-                System.out.println(other.getName() + " is no longer asleep!");
-                other.removeStatusEffect();
-                other.setStatusTurns(0);
+            if (other.getStatusTurns() != 0 || other.getStatusTurns() != -1) {
+                other.setStatusTurns((int)(Math.random() * 3) + 1);
+            }
+            if (other.getStatusTurns() > 0) {
+                System.out.println(other.getName() + " is asleep and can't move!");
+                other.decreaseStatusTurns();
+                other.canMove(false);
             }
             else {
-                System.out.println(other.getName() + " is asleep and can't move!"); 
-                other.decreaseStatusTurns();
+                System.out.println(other.getName() + " woke up!");
+                other.removeStatusEffect();
+                other.setStatusTurns(0);
+                other.canMove(true);
             }
         }
 
         else if (effect.equals("Frozen")) {
-            System.out.println(other.getName() + " is frozen and can't move!");
+            if (other.getStatusTurns() != 0 || other.getStatusTurns() != -1) {
+                other.setStatusTurns((int)(Math.random() * 3) + 1);
+                
+                //debug
+                System.out.println("        OH NO IM FROZEN (IN StatusMove)  " + other.getStatusTurns());
+            }
+            if (other.getStatusTurns() > 0) {
+                System.out.println(other.getName() + " is frozen and can't move!");
+                other.canMove(false);
+                other.decreaseStatusTurns();
+
+                //debug
+                System.out.println("        IM ACTUALLY FROZEN (IN STATUSMOVE)");
+            }
+
+            else {
+                System.out.println(other.getName() + " is no longer frozen!");
+                other.removeStatusEffect();
+                other.setStatusTurns(0);
+                other.canMove(true);
+            }
+            // System.out.println(other.getName() + " is frozen and can't move!");
         }
 
         else if (effect.equals("Arena spikes")) {

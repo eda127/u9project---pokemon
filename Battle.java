@@ -17,7 +17,7 @@ public class Battle{
       int defense = p.getDefense();
       int speed = p.getSpeed();
       String effect = p.getStatusEffect();
-      System.out.println("health: " + health + "  attack: " + attack + "  defense:" + defense + "  speed:" + speed + "  status effect:" + effect + " status turns: " + p.statusTurns);
+      System.out.println("health: " + health + "  attack: " + attack + "  defense:" + defense + "  speed:" + speed + "  status effect:" + effect + " status turns: " + p.statusTurns + " canMove: " + p.canMove);
       //end of debugging code
     
     System.out.println("Choose a move:");
@@ -43,43 +43,42 @@ public class Battle{
 
   public void turn(Pokemon a, Pokemon b){
     System.out.println(a + "'s turn!");
-        Move move = moveChoice(a);
+      // applying status effect to current pokemon, if it has one. if no status, nothing happens
+      StatusMove.effectConsequences(a);
 
-        // applying status effect to current pokemon, if it has one
-        if (a.getStatusEffect() != null) {
-            //then, apply status effect
-            StatusMove.effectConsequences(a);
-        }
+      // check if pokemon can move (from status)
+      if (!a.canMove) {
+          System.out.println("oneone");
+          return;
+      }
+      Move move = moveChoice(a);
 
-        // giving status effect to other pokemon if turn not skipped and move is a status effect move
-        if (move instanceof StatusMove) {
-            StatusMove sMove = (StatusMove)move;
-            if (Math.random()*100 < (sMove.getInflictionChance())) {
-                b.setStatusEffect(sMove.getStatusEffect());
-                
-                // if the status is sleep or freeze, its active for 1-3 turns only
-                if (sMove.getStatusEffect().equals("Sleep") || sMove.getStatusEffect().equals("Frozen")) {
-                    b.setStatusTurns((int)(Math.random() * 3) +1);
-                }
-                else b.setStatusTurns(-1);
-            }
-        }
-
-        // check if the move buffs or debuffs second
-        if (move instanceof BuffingMove) {
-            ((BuffingMove) move).changeStat(a);
-        }
-        else if (move instanceof DebuffingMove) {
-            ((DebuffingMove) move).changeStat(b);
-        }
-
-        // if neither status move or buff/debuff move, do damage
-        else {
-            int power = move.getPower(b);
-            int damage = (int)(power * ((double)a.getAttack())/b.getDefense());
-            System.out.println(b + " took " + damage + " damage.");
-            b.damage(damage);
-            System.out.println(b + " has " + Math.max(b.getHp(), 0) + " hit points left."); 
+      // giving status effect to other pokemon if turn not skipped and move is a status effect move
+      if (move instanceof StatusMove) {
+          StatusMove sMove = (StatusMove)move;
+          System.out.println("        OVER HERE 1 IN BATTLE");
+          if (Math.random()*100 < (sMove.getInflictionChance())) {
+              System.out.println("        HERE IM 2 IN BATTLE");
+              b.setStatusEffect(sMove.getStatusEffect());
+              StatusMove.effectConsequences(b); //maybe this line isnt supposed to be here?
+          }
+      }
+      
+      // check if the move buffs or debuffs second
+      else if (move instanceof BuffingMove) {
+          ((BuffingMove) move).changeStat(a);
+      }
+      else if (move instanceof DebuffingMove) {
+          ((DebuffingMove) move).changeStat(b);
+      }
+    
+      // if neither status move or buff/debuff move, do damage
+      else {
+          int power = move.getPower(b);
+          int damage = (int)(power * ((double)a.getAttack())/b.getDefense());
+          System.out.println(b + " took " + damage + " damage.");
+          b.damage(damage);
+          System.out.println(b + " has " + Math.max(b.getHp(), 0) + " hit points left."); 
       }
   }
 

@@ -8,6 +8,7 @@ public class Pokemon{
     int baseAccuracy = 100;
     String statusEffect = null;
     int statusTurns = 0;
+    boolean canMove = true;
     Move[] moveList;
 
     public Pokemon(String n, int hp, int attack, int defense, String type, int speed, Move[] moves){
@@ -99,7 +100,10 @@ public class Pokemon{
     public void decreaseStatusTurns() {
         statusTurns--;
     }
-    
+
+    public void canMove(boolean b) {
+        this.canMove = b;
+    }
 
 
     public Move[] getMoveList(){
