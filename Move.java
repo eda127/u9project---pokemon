@@ -49,11 +49,19 @@ public class Move{
         else this.level = 5000;
     }
 
-    public int getPower(Pokemon other){
+    public int getPower(Pokemon current, Pokemon other){
       int power = this.power;
       System.out.println(this.name + "!");
+
       //checking if accuracy made the move miss
-      if ((int) (Math.random()*100) < this.accuracy) {
+      int trueAcc = this.accuracy + current.getAccuracyModifier();         
+      /*//debug
+          System.out.println("        DEBUG 2 IN MOVE.java: Move accuracy = " + this.accuracy + ", Accuracy modifier = " + current.getAccuracyModifier() + ", true accuracy = " + trueAcc);
+          int rand = (int)(Math.random()*100);
+          System.out.println("        DEBUG 3 IN MOVE.java: rand num < trueAcc?  " + (rand < trueAcc));
+          ///// */
+      if ((int)(Math.random()*100) < (trueAcc) ) {
+          
           //calling the changeLevelToPercent method first, checking if it is a crit hit. multiply by 1.5 if yes
           changeLevelToPercent();
           if ((int) (Math.random()*10000) < this.level) {
@@ -64,6 +72,10 @@ public class Move{
           //checking the type damage
           power = (int) (power * typeDamage(other));
 
+      }
+      else {
+          System.out.println(current.getName() + " missed!");
+          return 0;
       }
       return power;
     }
@@ -91,6 +103,10 @@ public class Move{
 
     public String getType() {
         return this.type;
+    }
+
+    public int getAccuracy() {
+        return this.accuracy;
     }
 
     

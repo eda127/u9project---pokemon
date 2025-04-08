@@ -18,22 +18,24 @@ public class BuffingMove extends Move {
     }
 
     public void changeStat(Pokemon a) {
-        if (stat.toLowerCase().equals("speed")) {
+        String s = stat.toLowerCase();
+        
+        if (s.equals("speed")) {
             a.setSpeed(a.getSpeed() + buffAmount);
             System.out.println(a.getName() + "'s speed increased by "+ buffAmount + "!");
         }
 
-        else if (stat.toLowerCase().equals("defense")) {
+        else if (s.equals("defense")) {
             a.setDefense(a.getDefense() + buffAmount);
             System.out.println(a.getName() + "'s defense increased by "+ buffAmount + "!");
         }
 
-        else if (stat.toLowerCase().equals("hp") || stat.toLowerCase().equals("health")) {
+        else if (s.equals("hp") || s.equals("health")) {
             a.setHp(a.getHp() + buffAmount);
             System.out.println(a.getName() + "'s health increased by "+ buffAmount + "!");
         }
 
-        else if (stat.toLowerCase().equals("attack")) {
+        else if (s.equals("attack")) {
             a.setAttack(a.getAttack() + buffAmount);
             System.out.println(a.getName() + "'s attack increased by "+ buffAmount + "!");
         }

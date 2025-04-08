@@ -5,7 +5,7 @@ public class Pokemon{
     int defense;
     String type;
     int speed;
-    int baseAccuracy = 100;
+    int accuracyModifier = 0;
     String statusEffect = "none";
     int statusTurns = 0;
     boolean canMove = true;
@@ -45,8 +45,7 @@ public class Pokemon{
     }
   
     public int getAttack(){
-        if ((int)(Math.random()*100) <= baseAccuracy) return attack;
-        else return 0;
+        return attack;
     }
 
     public void setAttack(int a) {
@@ -65,12 +64,12 @@ public class Pokemon{
         this.speed = s;
     }
 
-    public int getAccuracy() {
-        return this.baseAccuracy;
+    public int getAccuracyModifier() {
+        return this.accuracyModifier;
     }
     
-    public void setAccuracy(int a) {
-        this.baseAccuracy = a;
+    public void setAccuracyModifier(int a) {
+        this.accuracyModifier = a;
     }
 
 

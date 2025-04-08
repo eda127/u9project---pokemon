@@ -11,38 +11,40 @@ public class Battle{
   public Move moveChoice(Pokemon p){
     Scanner input = new Scanner(System.in);
     
-    System.out.println("Choose a move:");
+    System.out.println("Choose a move. Press 9 for your Pokemon's info:");
     int i = 1;
     for(Move move:p.getMoveList()){
-      System.out.println(i + ": " + move + "  (" + move.getPower() + " power, " + move.getType() + " type)");
+      System.out.println(i + ": " + move + "  (" + move.getPower() + " power, " + move.getType() + " type, " + move.getAccuracy() + "% accurate)");
       i++;
     }
-    int choice = input.nextInt();
-    if(choice == 1){
-      return p.getMoveList()[0];
-    }
-    else if(choice == 2){
-      return p.getMoveList()[1];
-    }
-    else if(choice == 3){
-      return p.getMoveList()[2];
-    }
-    else{
-      return p.getMoveList()[3];
+    while (true) {
+        int choice = input.nextInt();
+        if(choice == 1){
+          return p.getMoveList()[0];
+        }
+        else if(choice == 2){
+          return p.getMoveList()[1];
+        }
+        else if(choice == 3){
+          return p.getMoveList()[2];
+        }
+        else if (choice == 9) {
+          int health = p.getHp();
+          int attack = p.getAttack();
+          int defense = p.getDefense();
+          int speed = p.getSpeed();
+          int accMod = p.getAccuracyModifier();
+          String effect = p.getStatusEffect();
+          System.out.println(" health: " + health + "\n attack: " + attack + "\n defense:" + defense + "\n speed:" + speed + "\n base accuracy: " + (100+accMod) + "%\n status effect: " + effect);
+        }
+        else{
+          return p.getMoveList()[3];
+        }
     }
   }
 
   public void turn(Pokemon a, Pokemon b){
     System.out.println(a + "'s turn!");
-
-          /*//debugging only
-          int health = a.getHp();
-          int attack = a.getAttack();
-          int defense = a.getDefense();
-          int speed = a.getSpeed();
-          String effect = a.getStatusEffect();
-          System.out.println("        health: " + health + "  attack: " + attack + "  defense:" + defense + "  speed:" + speed + "  status effect:" + effect + " status turns: " + a.statusTurns + " canMove: " + a.canMove);
-          //end of debugging code*/
 
       // stops turn if pokemon can't move
       if (!a.canMove) {
@@ -56,7 +58,7 @@ public class Battle{
           // has a .getInflictionChance() chance of applying effect, then applies damage
           if (Math.random()*100 < (sMove.getInflictionChance())) {
               b.setStatusEffect(sMove.getStatusEffect());
-              int power = move.getPower(b);
+              int power = move.getPower(a, b);
               int damage = (int)(power * ((double)a.getAttack())/b.getDefense());
               System.out.println(b + " took " + damage + " damage.");
               b.damage(damage);
@@ -75,7 +77,7 @@ public class Battle{
     
       // if neither status move or buff/debuff move, do damage
       else {
-          int power = move.getPower(b);
+          int power = move.getPower(a, b);
           int damage = (int)(power * ((double)a.getAttack())/b.getDefense());
           System.out.println(b + " took " + damage + " damage.");
           b.damage(damage);
