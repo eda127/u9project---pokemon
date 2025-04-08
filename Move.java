@@ -55,11 +55,11 @@ public class Move{
 
       //checking if accuracy made the move miss
       int trueAcc = this.accuracy + current.getAccuracyModifier();         
-      /*//debug
+          /*//debug
           System.out.println("        DEBUG 2 IN MOVE.java: Move accuracy = " + this.accuracy + ", Accuracy modifier = " + current.getAccuracyModifier() + ", true accuracy = " + trueAcc);
           int rand = (int)(Math.random()*100);
           System.out.println("        DEBUG 3 IN MOVE.java: rand num < trueAcc?  " + (rand < trueAcc));
-          ///// */
+          /////*/
       if ((int)(Math.random()*100) < (trueAcc) ) {
           
           //calling the changeLevelToPercent method first, checking if it is a crit hit. multiply by 1.5 if yes
