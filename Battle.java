@@ -100,6 +100,7 @@ public class Battle{
     }
     System.out.println("A wild " + p2 + " has appeared! I choose you, " + p1);
     int turn = 0;
+    
     while(p1.getHp() > 0 && p2.getHp() > 0){
       if(turn % 2 == 0){
         turn(p1, p2);
@@ -109,11 +110,13 @@ public class Battle{
       }
         turn++;
     }
-    if(p1.getHp() == 0){
+    if(p1.getHp() <= 0){
         System.out.println(p1 + " fainted! " + p2 + " wins!");
+        return;
     }
     else{
       System.out.println(p2 + " fainted! " + p1 + " wins!");
+      return;
     }
   }
 }

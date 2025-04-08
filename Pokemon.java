@@ -17,6 +17,7 @@ public class Pokemon{
         this.attack = attack;
         this.defense = defense;
         this.type = type;
+        this.speed = speed;
         this.moveList = moves;
     }
   
