@@ -14,7 +14,7 @@ public class Battle{
     System.out.println("Choose a move:");
     int i = 1;
     for(Move move:p.getMoveList()){
-      System.out.println(i + ": " + move);
+      System.out.println(i + ": " + move + "  (" + move.getPower() + " power, " + move.getType() + " type)");
       i++;
     }
     int choice = input.nextInt();
@@ -86,7 +86,7 @@ public class Battle{
       //only happens at end of turn
       EffectMove.effectConsequences(a);
 
-      System.out.println("End of " + a.getName() + "'s turn.");
+      System.out.println("End of " + a.getName() + "'s turn.\n");
   }
 
   public void start(){

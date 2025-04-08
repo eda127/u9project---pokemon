@@ -67,7 +67,6 @@ public class Move{
       }
       return power;
     }
-
     
     public double typeDamage(Pokemon other) {
         int moveTypePos = 0;
@@ -83,6 +82,15 @@ public class Move{
             }
         }
         return typeWeaknesses[opponentTypePos][moveTypePos];
+    }
+
+
+    public int getPower() {
+        return this.power;
+    }
+
+    public String getType() {
+        return this.type;
     }
 
     

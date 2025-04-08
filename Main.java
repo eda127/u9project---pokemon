@@ -9,7 +9,7 @@ public class Main {
     Pelipper pp = new Pelipper();
     onlyStatus o = new onlyStatus();
 
-    Battle battle = new Battle(pp, o);
+    Battle battle = new Battle(l, f);
     battle.start();
     }
 
